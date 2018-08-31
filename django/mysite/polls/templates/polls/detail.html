@@ -1,0 +1,21 @@
+<h1>{{ question.question_text }}</h1>
+{% if error_message %}
+    <p>
+        <strong>{{ error_message }}</strong>
+    </p>
+{% endif %}
+
+{#在 Question 的每个 Choice 前添加一个单选按钮,当点击vote时,form发送一个POST数据#}
+{#action就是点击vote的点击事件#}
+<form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    {#构建POST数据#}
+    {#forloop.counter指示for标签当前的循环次数#}
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        {#label的for属性指定label与哪个表单元素绑定(通过id推断)#}
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+    <input type="submit" value="Vote">
+</form>
+
