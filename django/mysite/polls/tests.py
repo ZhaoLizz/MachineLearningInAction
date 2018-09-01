@@ -96,10 +96,18 @@ class QuestionDetailViewTests(TestCase):
         self.assertEqual(response.status_code,404)
 
     def test_past_question(self):
-        """
-        :return:
-        """
         past_question = create_question(question_text='Past Question.',days=-5)
         url = reverse('polls:detail',args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response,past_question.question_text)
+
+class QuestionVoteTests(TestCase):
+    def test_form_vote(self):
+        """
+        模拟表单提交数据
+        """
+        question_id = 1
+        url = reverse('polls:vote',args=(question_id))
+        response = self.client.post(url,data={'choice':1})
+        print(response)
+

@@ -63,6 +63,7 @@ class ResultView(generic.DetailView):
 
 
 def vote(request, question_id):
+    print('log',question_id)
     question = get_object_or_404(Question, pk=question_id)
     try:
         # 通过HTML里的form的input的name获取表单数据的value字段,这里可以获取到choice的ID
